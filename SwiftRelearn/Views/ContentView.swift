@@ -9,16 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     // 定数の宣言
-    let hijiki = Cat(name: "ひじき", age: 6, nickname: "ひじきちゃん")
-    let tsukushi = Cat(name: "つくし", age: 4, nickname: nil)
+    let cats = [
+        Cat(name: "ひじき", age: 6, nickname: "ひじきちゃん"),
+        Cat(name: "つくし", age: 4, nickname: nil)
+    ]
     
     var body: some View {
         VStack(spacing: 20) {
             // 変数の宣言と初期化
-            Text(hijiki.introduce())
-            Text(hijiki.checkNickname())
-            Text(tsukushi.introduce())
-            Text(tsukushi.checkNickname())
+            ForEach(cats, id: \.name) { cat in
+                Text(cat.introduce)
+                Text(cat.nicknameDescription)
+            }
         }
     }
 }
