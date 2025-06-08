@@ -14,6 +14,9 @@ struct ContentView: View {
         Cat(name: "つくし", age: 4, nickname: nil, mood: .hungry)
     ]
     
+    // 猫ごとの給餌状態を管理
+    @State private var feedingStates: [UUID: FeedingState] = [:]
+    
     var body: some View {
         VStack(spacing: 20) {
             // 変数の宣言と初期化
@@ -27,11 +30,30 @@ struct ContentView: View {
                     
                     // 気分の説明を表示
                     Text(cat.moodDescription)
+                    
+                    // 給餌状態を表示
+                    Text(feedingStates[cat.id]?.description ?? "まだごはんをあげていません。")
+                    
+                    // ボタンで給餌状態を更新
+                    Button(action: {
+                        // ボタンが押されたときの処理
+                        toggleFeeding(for: cat)
+                    }) {
+                        Text(feedingStates[cat.id]?.buttonLabel ?? "ごはんをあげる")
+                    }
+                    .padding(.top, 5)
                 }
-                
+                .padding(.vertical,5)
             }
         }
     }
+    // 猫ごとの給餌状態をトグルする関数
+    // この関数は、猫のIDを引数に取り、現在の給餌状態を切り替える
+    private func toggleFeeding(for cat: Cat) {
+          let current = feedingStates[cat.id] ?? .hungry
+          let newState: FeedingState = current == .hungry ? .fed : .hungry
+          feedingStates[cat.id] = newState
+      }
 }
 
 #Preview {
