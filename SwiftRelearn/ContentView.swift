@@ -7,14 +7,24 @@
 
 import SwiftUI
 
+struct Cat {
+    let name: String
+    let age: Int
+    let nickname: String?
+}
+
 struct ContentView: View {
+    // 定数の宣言
+    let hijiki = Cat(name: "ひじき", age: 6, nickname: "ひじきちゃん")
+    let tsukushi = Cat(name: "つくし", age: 4, nickname: nil)
+    
     var body: some View {
         VStack(spacing: 20) {
             // 変数の宣言と初期化
-            Text(introduce(name: "ひじき", age: 6))
-            Text(checkNickname(nickname: "ひじきちゃん"))
-            Text(introduce(name: "つくし", age: 4))
-            Text(checkNickname(nickname: nil))
+            Text(introduce(name: hijiki.name, age: hijiki.age))
+            Text(checkNickname(nickname: hijiki.nickname))
+            Text(introduce(name: tsukushi.name, age: tsukushi.age))
+            Text(checkNickname(nickname: tsukushi.nickname))
             
         }
     }
