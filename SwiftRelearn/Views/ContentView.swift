@@ -34,6 +34,7 @@ struct ContentView: View {
                         // ボタンが押されたときの処理
                         viewModel.toggleFeeding(for: cat)
                     }) {
+                        // ボタンのラベルを表示
                         Text(viewModel.feedingStates[cat.id]?.buttonLabel ?? "ごはんをあげる")
                     }
                     .padding(.top, 5)
