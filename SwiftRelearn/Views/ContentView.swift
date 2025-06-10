@@ -13,33 +13,14 @@ struct ContentView: View {
     @StateObject private var viewModel = CatViewModel()
 
     var body: some View {
-        VStack(spacing: 20) {
-            // 変数の宣言と初期化
+        NavigationStack {
             List(viewModel.cats) { cat in
-                VStack(alignment: .leading, spacing: 10) {
-                    // 猫の名前と年齢を表示
-                    Text("\(cat.name) (\(cat.age)歳)")
-                    
-                    // ニックネームの説明を表示
-                    Text(cat.nicknameDescription)
-                    
-                    // 気分の説明を表示
-                    Text(cat.moodDescription)
-                    
-                    // 給餌状態を表示
-                    Text(viewModel.feedingStates[cat.id]?.description ?? "お腹が空いています。")
-                    
-                    // ボタンで給餌状態を更新
-                    Button(action: {
-                        // ボタンが押されたときの処理
-                        viewModel.toggleFeeding(for: cat)
-                    }) {
-                        // ボタンのラベルを表示
-                        Text(viewModel.feedingStates[cat.id]?.buttonLabel ?? "ごはんをあげる")
+                NavigationLink(destination: CatDetailView(cat: cat)) {
+                    VStack(alignment: .leading) {
+                        Text("\(cat.name) (\(cat.age)歳)")
+                        Text(cat.moodDescription)
                     }
-                    .padding(.top, 5)
                 }
-                .padding(.vertical,5)
             }
         }
     }
