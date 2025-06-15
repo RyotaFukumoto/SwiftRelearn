@@ -15,7 +15,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List(viewModel.cats) { cat in
-                NavigationLink(destination: CatDetailView(cat: cat)) {
+                NavigationLink(destination: CatDetailView(cat: cat, viewModel: viewModel)) {
                     VStack(alignment: .leading) {
                         Text("\(cat.name) (\(cat.age)歳)")
                         Text(cat.moodDescription)
