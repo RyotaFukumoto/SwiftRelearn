@@ -21,7 +21,14 @@ struct ContentView: View {
                         Text(cat.moodDescription)
                     }
                 }
-            }
+            }.navigationTitle("猫リスト")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: AddCatView(viewModel: viewModel)) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
         }
     }
 }

@@ -14,4 +14,9 @@ class CatViewModel: ObservableObject {
         let current = feedingStates[cat.id] ?? .hungry
         feedingStates[cat.id] = (current == .hungry) ? .fed : .hungry
     }
+    
+    func addCat(name: String, age: Int, nickname: String?, mood: CatMood) {
+        let newCat = Cat(name: name, age: age, nickname: nickname, mood: mood)
+        cats.append(newCat)
+    }
 }
