@@ -2,15 +2,12 @@
 
 import Foundation
 
-enum CatMood {
-    case happy
-    case sleepy
-    case hungry
-    case angry
+enum CatMood: String, Codable {
+    case happy, sleepy, hungry, angry
 }
 
 // Cat構造体: 猫の情報をまとめるデータ型
-struct Cat:Identifiable {
+struct Cat:Identifiable, Codable {
     // Identifiableプロトコルに準拠するためのID
     var id: UUID = UUID()
     // 名前（例: "ひじき"）

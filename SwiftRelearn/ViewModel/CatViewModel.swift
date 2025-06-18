@@ -1,22 +1,43 @@
 import Foundation
 
 class CatViewModel: ObservableObject {
-    // ObservableObjectプロトコルに準拠し、@Publishedプロパティを使用してUI更新を通知する
-    @Published var cats: [Cat] = [
-        Cat(name: "ひじき", age: 6, nickname: "ひじきちゃん", mood: .happy),
-        Cat(name: "つくし", age: 4, nickname: nil, mood: .hungry)
-    ]
-    // 猫ごとの給餌状態を管理するための辞書
+    @Published var cats: [Cat] = [] {
+        didSet {
+            saveCats()
+        }
+    }
+
     @Published var feedingStates: [UUID: FeedingState] = [:]
 
-    // 猫のリストを取得する関数
-    func toggleFeeding(for cat: Cat) {
-        let current = feedingStates[cat.id] ?? .hungry
-        feedingStates[cat.id] = (current == .hungry) ? .fed : .hungry
+    private let catsKey = "savedCats"
+
+    init() {
+        loadCats()
     }
-    
+
     func addCat(name: String, age: Int, nickname: String?, mood: CatMood) {
         let newCat = Cat(name: name, age: age, nickname: nickname, mood: mood)
         cats.append(newCat)
     }
+
+    // 保存処理
+    private func saveCats() {
+        if let data = try? JSONEncoder().encode(cats) {
+            UserDefaults.standard.set(data, forKey: catsKey)
+        }
+    }
+
+    // 読み込み処理
+    private func loadCats() {
+        guard let data = UserDefaults.standard.data(forKey: catsKey),
+              let savedCats = try? JSONDecoder().decode([Cat].self, from: data) else { return }
+
+        self.cats = savedCats
+    }
+
+    func toggleFeeding(for cat: Cat) {
+        let current = feedingStates[cat.id] ?? .hungry
+        feedingStates[cat.id] = (current == .hungry) ? .fed : .hungry
+    }
 }
+
