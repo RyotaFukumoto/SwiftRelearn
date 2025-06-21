@@ -9,8 +9,10 @@ class CatViewModel: ObservableObject {
 
     @Published var feedingStates: [UUID: FeedingState] = [:]
 
+    // 保存用キー（UserDefaultsで使用）
     private let catsKey = "savedCats"
-
+    private let feedingKey = "savedFeedingStates"
+    
     init() {
         loadCats()
     }
@@ -20,19 +22,27 @@ class CatViewModel: ObservableObject {
         cats.append(newCat)
     }
 
-    // 保存処理
+    // 保存する関数
     private func saveCats() {
-        if let data = try? JSONEncoder().encode(cats) {
-            UserDefaults.standard.set(data, forKey: catsKey)
+        if let encodedCats = try? JSONEncoder().encode(cats) {
+            UserDefaults.standard.set(encodedCats, forKey: catsKey)
+        }
+        if let encodedFeeding = try? JSONEncoder().encode(feedingStates) {
+            UserDefaults.standard.set(encodedFeeding, forKey: feedingKey)
         }
     }
 
-    // 読み込み処理
+    // 読み込む関数
     private func loadCats() {
-        guard let data = UserDefaults.standard.data(forKey: catsKey),
-              let savedCats = try? JSONDecoder().decode([Cat].self, from: data) else { return }
-
-        self.cats = savedCats
+        if let catData = UserDefaults.standard.data(forKey: catsKey),
+           let savedCats = try? JSONDecoder().decode([Cat].self, from: catData) {
+            cats = savedCats
+        }
+        
+        if let feedData = UserDefaults.standard.data(forKey: feedingKey),
+           let savedFeeding = try? JSONDecoder().decode([UUID: FeedingState].self, from: feedData) {
+            feedingStates = savedFeeding
+        }
     }
 
     func toggleFeeding(for cat: Cat) {

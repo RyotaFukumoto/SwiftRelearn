@@ -2,7 +2,7 @@
 
 import Foundation
 
-enum FeedingState {
+enum FeedingState: Codable {
     case hungry
     case fed
 
