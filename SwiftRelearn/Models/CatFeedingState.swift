@@ -1,8 +1,4 @@
-// CatFeedingState.swift
-
-import Foundation
-
-enum FeedingState: Codable {
+enum FeedingState: String, Codable {
     case hungry
     case fed
 
