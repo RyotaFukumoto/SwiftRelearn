@@ -18,7 +18,7 @@ struct ContentView: View {
                 NavigationLink(destination: CatDetailView(cat: cat, viewModel: viewModel)) {
                     VStack(alignment: .leading) {
                         Text("\(cat.name) (\(cat.age)歳)")
-                        Text(cat.moodDescription)
+                        Text(cat.moodDescription).catInfoStyle()
                     }
                 }
             }.navigationTitle("猫リスト")
