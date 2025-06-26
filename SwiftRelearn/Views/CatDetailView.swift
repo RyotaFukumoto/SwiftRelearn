@@ -35,12 +35,8 @@ struct CatDetailView: View {
                 viewModel.toggleFeeding(for: cat)
             }) {
                 Text(viewModel.feedingStates[cat.id]?.buttonLabel ?? "ごはんをあげる")
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
             }
+            .buttonStyle(CatButtonStyle())
 
             Spacer()
         }
